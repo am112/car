@@ -1,26 +1,52 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import {
+    BreadcrumbItem,
+    BreadcrumbList,
+    BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import CustomerChart from "@/features/dashboard/components/customer-chart";
+import CustomerStatistic from "@/features/dashboard/components/customer-statistic";
+import DeviceChart from "@/features/dashboard/components/device-chart";
+import InvoiceUnresolved from "@/features/dashboard/components/invoice-unresolved";
+import DashboardLayout from "@/layouts/DashboardLayout";
+import { Deferred, Head } from "@inertiajs/react";
 
-export default function Dashboard() {
+type Props = {
+    posts: string[];
+};
+
+export default function Page({ posts }: Props) {
     return (
-        <AuthenticatedLayout
+        <DashboardLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
+                <BreadcrumbList>
+                    <BreadcrumbItem className="hidden md:block">
+                        <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
             }
         >
             <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
+            <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-4 gap-4">
+                    <CustomerStatistic />
+                    <CustomerChart />
+                    <InvoiceUnresolved />
+                    <CustomerChart />
+                </div>
+                <div>
+                    <DeviceChart />
+                </div>
+                <div>
+                    <Deferred data="posts" fallback={<div>Loading...</div>}>
+                        <div>
+                            {posts &&
+                                posts.map((post) => (
+                                    <div key={post}>{post}</div>
+                                ))}
                         </div>
-                    </div>
+                    </Deferred>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </DashboardLayout>
     );
 }

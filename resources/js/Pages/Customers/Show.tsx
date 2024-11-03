@@ -8,7 +8,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import CustomerEdit from "@/features/customers/components/customer-edit";
 import CustomerOrder from "@/features/customers/components/customer-order";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard-layout";
 import { Customer } from "@/types/customer";
 import { Head, Link } from "@inertiajs/react";
 import CustomerMenu from "@/features/customers/components/customer-menu";

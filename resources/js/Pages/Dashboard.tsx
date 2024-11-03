@@ -7,7 +7,7 @@ import CustomerChart from "@/features/dashboard/components/customer-chart";
 import CustomerStatistic from "@/features/dashboard/components/customer-statistic";
 import DeviceChart from "@/features/dashboard/components/device-chart";
 import InvoiceUnresolved from "@/features/dashboard/components/invoice-unresolved";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard-layout";
 import { Deferred, Head } from "@inertiajs/react";
 
 type Props = {

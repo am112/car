@@ -1,6 +1,6 @@
 import { PageProps } from "@/types";
 import { Head, Link } from "@inertiajs/react";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard-layout";
 import {
     BreadcrumbItem,
     BreadcrumbList,

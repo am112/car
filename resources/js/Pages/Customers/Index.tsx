@@ -4,7 +4,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard-layout";
 import { Deferred, Head, Link } from "@inertiajs/react";
 import { Datatable } from "@/types/datatable";
 import { DataTable } from "@/components/datatables/data-table";

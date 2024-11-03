@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import CustomerMenu from "@/features/customers/components/customer-menu";
-import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardLayout from "@/layouts/dashboard-layout";
 import { Customer } from "@/types/customer";
 import { Head, Link } from "@inertiajs/react";
 

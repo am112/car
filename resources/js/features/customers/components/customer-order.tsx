@@ -2,8 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Customer } from "@/types/customer";
+import { Order } from "@/types/order";
 
-export default function CustomerOrder({ customer }: { customer: Customer }) {
+type Props = {
+    order: Order;
+};
+
+export default function CustomerOrder({ order }: Props) {
     return (
         <Card className="flex-1">
             <CardHeader>
@@ -13,12 +18,35 @@ export default function CustomerOrder({ customer }: { customer: Customer }) {
                 <form className="grid gap-4">
                     <div className="grid gap-4 grid-cols-2">
                         <div className="grid gap-2">
+                            <Label htmlFor="reference_no">Order No</Label>
+                            <Input
+                                id="reference_no"
+                                type="text"
+                                value={order?.reference_no}
+                                disabled
+                                className="mt-1 block w-full"
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="contract_at">Contract Date</Label>
+                            <Input
+                                id="contract_at"
+                                type="text"
+                                disabled
+                                value={order?.contract_at}
+                                className="mt-1 block w-full"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid gap-4 grid-cols-2">
+                        <div className="grid gap-2">
                             <Label htmlFor="tenure">Tenure</Label>
                             <Input
                                 id="tenure"
                                 type="text"
                                 disabled
-                                value={`${customer.tenure} Months`}
+                                value={`${order?.tenure} Months`}
                                 className="mt-1 block w-full"
                             />
                         </div>
@@ -29,7 +57,7 @@ export default function CustomerOrder({ customer }: { customer: Customer }) {
                             <Input
                                 id="subscription_fee"
                                 type="text"
-                                value={`RM ${customer.subscription_fee}`}
+                                value={`RM ${order?.subscription_fee}`}
                                 disabled
                                 className="mt-1 block w-full"
                             />
@@ -37,16 +65,6 @@ export default function CustomerOrder({ customer }: { customer: Customer }) {
                     </div>
 
                     <div className="grid gap-4 grid-cols-2">
-                        <div className="grid gap-2">
-                            <Label htmlFor="contract_at">Contract Date</Label>
-                            <Input
-                                id="contract_at"
-                                type="text"
-                                disabled
-                                value={customer.contract_at}
-                                className="mt-1 block w-full"
-                            />
-                        </div>
                         <div className="grid gap-2">
                             <Label htmlFor="payment_gateway">
                                 Payment Provider
@@ -54,14 +72,11 @@ export default function CustomerOrder({ customer }: { customer: Customer }) {
                             <Input
                                 id="payment_gateway"
                                 type="text"
-                                value={customer.payment_gateway}
+                                value={order?.payment_gateway}
                                 disabled
                                 className="mt-1 block w-full"
                             />
                         </div>
-                    </div>
-
-                    <div className="grid gap-4 grid-cols-2">
                         <div className="grid gap-2">
                             <Label htmlFor="payment_reference">
                                 Payment Reference
@@ -70,7 +85,7 @@ export default function CustomerOrder({ customer }: { customer: Customer }) {
                                 id="payment_reference"
                                 type="text"
                                 disabled
-                                value={customer.payment_reference}
+                                value={order?.payment_reference}
                                 className="mt-1 block w-full"
                             />
                         </div>

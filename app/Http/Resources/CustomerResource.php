@@ -21,16 +21,11 @@ class CustomerResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'active' => $this->active,
-            'tenure' => $this->tenure,
-            'subscription_fee' => Helper::formatMoney($this->subscription_fee),
-            'contract_at' => $this->contract_at->format('Y-m-d'),
-            'completed_at' => $this->completed_at,
+            'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d H:i'),
             'addresses' => $this->whenLoaded('addresses'),
+            'order' => OrderResource::make($this->whenLoaded('order')),
             'unresolved_invoices_amount' => Helper::formatMoney($this->invoices_sum_unresolved_amount ?? 0),
-            'payment_gateway' => $this->payment_gateway,
-            'payment_reference' => $this->payment_reference,
         ];
     }
 }

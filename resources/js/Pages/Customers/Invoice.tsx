@@ -1,3 +1,5 @@
+import { DataTable } from "@/components/datatables/data-table";
+import DataTableLoading from "@/components/datatables/datatable-loading";
 import {
     BreadcrumbItem,
     BreadcrumbList,
@@ -6,11 +8,19 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import CustomerMenu from "@/features/customers/components/customer-menu";
+import { customerInvoicesColumns } from "@/features/customers/tables/invoices-columns";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import { Customer } from "@/types/customer";
-import { Head, Link } from "@inertiajs/react";
+import { Datatable } from "@/types/datatable";
+import { Invoice } from "@/types/invoice";
+import { Deferred, Head, Link } from "@inertiajs/react";
 
-export default function Page({ customer }: { customer: Customer }) {
+type PropsType = {
+    customer: Customer;
+    table: Datatable<Invoice>;
+};
+
+export default function Page({ customer, table }: PropsType) {
     return (
         <DashboardLayout
             header={
@@ -46,7 +56,18 @@ export default function Page({ customer }: { customer: Customer }) {
                 <Separator className="my-2" />
 
                 <div className="grid gap-6">
-                    <div> invoices table here... </div>
+                    <Deferred data="table" fallback={<DataTableLoading />}>
+                        {table && (
+                            <DataTable
+                                columns={customerInvoicesColumns(
+                                    table.meta.current_page,
+                                    table.meta.per_page,
+                                )}
+                                data={table.data}
+                                paginator={table}
+                            />
+                        )}
+                    </Deferred>
                 </div>
             </div>
         </DashboardLayout>

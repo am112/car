@@ -5,8 +5,15 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+        roles: string[];
     };
     menu: Menu[];
+    flash?: FlashMessage;
+};
+
+type FlashMessage = {
+    message: string;
+    error: boolean;
 };
 
 type Menu = {

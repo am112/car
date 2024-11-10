@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('credits', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->string('reference_no')->unique();
             $table->integer('amount');
             $table->boolean('unresolved')->default(true);

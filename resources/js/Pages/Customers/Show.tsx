@@ -52,7 +52,7 @@ export default function Page({ customer }: { customer: Customer }) {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <CustomerEdit customer={customer} />
-                        <CustomerOrder customer={customer} />
+                        <CustomerOrder order={customer.order} />
                     </div>
                 </div>
             </div>

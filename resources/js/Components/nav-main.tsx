@@ -1,88 +1,48 @@
 "use client";
-
-import { ChevronRight, type LucideIcon } from "lucide-react";
-
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
     SidebarGroup,
-    SidebarGroupLabel,
+    SidebarGroupContent,
     SidebarMenu,
-    SidebarMenuAction,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { Link } from "@inertiajs/react";
+import DynamicIcon from "./dynamic-icon";
+import { Menu } from "@/types";
 
 type Props = {
-    items: Item[];
+    menu: Menu[];
 };
 
-type Item = {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-    isActive?: boolean;
-    items?: Item[];
-};
-
-export function NavMain({ items }: Props) {
+export function NavMain({ menu }: Props) {
     return (
         <SidebarGroup>
-            <SidebarMenu>
-                {items.map((item) => (
-                    <Collapsible
-                        key={item.title}
-                        asChild
-                        defaultOpen={item.isActive}
-                    >
-                        <SidebarMenuItem>
-                            <SidebarMenuButton asChild tooltip={item.title}>
-                                <a href={item.url}>
-                                    <item.icon />
+            <SidebarGroupContent>
+                <SidebarMenu>
+                    {menu.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton
+                                asChild
+                                isActive={route()
+                                    .current()
+                                    ?.startsWith(item.name)}
+                            >
+                                <Link
+                                    href={item.link}
+                                    prefetch={
+                                        !route().current()?.includes(item.name)
+                                    }
+                                    cacheFor="5m"
+                                >
+                                    <DynamicIcon name={item.icon} />
+                                    {/* <item.icon /> */}
                                     <span>{item.title}</span>
-                                </a>
+                                </Link>
                             </SidebarMenuButton>
-                            {item.items?.length ? (
-                                <>
-                                    <CollapsibleTrigger asChild>
-                                        <SidebarMenuAction className="data-[state=open]:rotate-90">
-                                            <ChevronRight />
-                                            <span className="sr-only">
-                                                Toggle
-                                            </span>
-                                        </SidebarMenuAction>
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent>
-                                        <SidebarMenuSub>
-                                            {item.items?.map((subItem) => (
-                                                <SidebarMenuSubItem
-                                                    key={subItem.title}
-                                                >
-                                                    <SidebarMenuSubButton
-                                                        asChild
-                                                    >
-                                                        <a href={subItem.url}>
-                                                            <span>
-                                                                {subItem.title}
-                                                            </span>
-                                                        </a>
-                                                    </SidebarMenuSubButton>
-                                                </SidebarMenuSubItem>
-                                            ))}
-                                        </SidebarMenuSub>
-                                    </CollapsibleContent>
-                                </>
-                            ) : null}
                         </SidebarMenuItem>
-                    </Collapsible>
-                ))}
-            </SidebarMenu>
+                    ))}
+                </SidebarMenu>
+            </SidebarGroupContent>
         </SidebarGroup>
     );
 }

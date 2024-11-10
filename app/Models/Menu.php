@@ -11,7 +11,7 @@ class Menu
         return [
             self::create('Dashboard', route('dashboard'), 'dashboard', 'layout-grid'),
             self::create('Customers', route('customers.index'), 'customers', 'users'),
-            self::create('Invoices', route('invoices.index'), 'Invoices', 'file-text'),
+            self::create('Invoices', route('invoices.index'), 'invoices', 'file-text'),
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,14 +45,14 @@ class Charge extends Model
         return false;
     }
 
-    public static function referenceNoConvention(int $runningNo, Carbon $today): string
-    {
-        return 'LATE-' . $today->format('Ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
-    }
-
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function invoice(): BelongsTo
@@ -62,5 +63,15 @@ class Charge extends Model
     public function transactions(): MorphMany
     {
         return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    public function scopeUnresolved(Builder $query): void
+    {
+        $query->where('unresolved', true);
+    }
+
+    public function scopeResolved(Builder $query): void
+    {
+        $query->where('unresolved', false);
     }
 }

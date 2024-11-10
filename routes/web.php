@@ -21,23 +21,21 @@ Route::middleware('auth')->group(function () {
         ->controller(App\Http\Controllers\InvoiceController::class)
         ->group(function () {
             Route::get('', 'index')->name('invoices.index');
+            Route::get('{invoice}', 'show')->name('invoices.show');
         });
 
     Route::prefix('users')
         ->controller(App\Http\Controllers\UserController::class)
         ->group(function () {
             Route::get('', 'index')->name('users.index');
-            Route::post('', 'store')->name('users.store');
-            Route::get('create', 'create')->name('users.create');
-
         });
 
     Route::prefix('profile')
         ->controller(App\Http\Controllers\ProfileController::class)
         ->group(function () {
-            Route::get('profile', 'edit')->name('profile.edit');
-            Route::patch('profile', 'update')->name('profile.update');
-            Route::delete('profile', 'destroy')->name('profile.destroy');
+            Route::get('', 'edit')->name('profile.edit');
+            Route::patch('', 'update')->name('profile.update');
+            Route::delete('', 'destroy')->name('profile.destroy');
 
         });
 

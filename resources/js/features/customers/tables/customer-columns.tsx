@@ -6,12 +6,15 @@ import { Customer } from "@/types";
 import { Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const customerColumns = (page: number): ColumnDef<Customer>[] => {
+export const customerColumns = (
+    page: number,
+    perPageCount: number = 10,
+): ColumnDef<Customer>[] => {
     return [
         {
             header: "No",
             cell: ({ row, table }) => {
-                return DataTableIndex(page, table, row);
+                return DataTableIndex(page, table, row, perPageCount);
             },
         },
         {
@@ -20,7 +23,7 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            ID
+                            ID/NRIC
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -35,6 +38,16 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                             </Button>
                         </div>
                     </>
+                );
+            },
+            cell: ({ row }) => {
+                return (
+                    <Link
+                        href={route("customers.show", row.original.id)}
+                        className=" text-primary hover:underline"
+                    >
+                        {row.getValue("uuid")}
+                    </Link>
                 );
             },
         },
@@ -61,22 +74,15 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                     </>
                 );
             },
-            cell: ({ row }) => {
-                return (
-                    <Link href={route("customers.show", row.original.id)}>
-                        {row.getValue("name")}
-                    </Link>
-                );
-            },
         },
 
         {
-            accessorKey: "subscription_fee",
+            accessorKey: "phone",
             header: ({ column }) => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            Monthly Fee
+                            Phone Number
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -95,12 +101,12 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
             },
         },
         {
-            accessorKey: "tenure",
+            accessorKey: "email",
             header: ({ column }) => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            Tenure
+                            Email
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -119,12 +125,12 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
             },
         },
         {
-            accessorKey: "contract_at",
+            accessorKey: "status",
             header: ({ column }) => {
                 return (
                     <>
                         <div className="flex items-center gap-0">
-                            Contract Date
+                            Status
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -141,15 +147,11 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
                     </>
                 );
             },
-        },
-        {
-            accessorKey: "unresolved_invoices_amount",
-            header: "Unresolved Amount",
             cell: ({ row }) => {
                 return (
-                    <div className="flex justify-end">
-                        <Badge variant="secondary" className="align-right">
-                            {row.getValue("unresolved_invoices_amount")}
+                    <div className="flex">
+                        <Badge variant="secondary">
+                            {row.getValue("status")}
                         </Badge>
                     </div>
                 );
@@ -158,6 +160,25 @@ export const customerColumns = (page: number): ColumnDef<Customer>[] => {
         {
             accessorKey: "created_at",
             header: "Created At",
+        },
+        {
+            accessorKey: "unresolved_invoices_amount",
+            header: ({ column }) => {
+                return (
+                    <>
+                        <div className="flex items-center justify-end gap-0">
+                            Unresolved Amount (RM)
+                        </div>
+                    </>
+                );
+            },
+            cell: ({ row }) => {
+                return (
+                    <div className="flex justify-end">
+                        {row.getValue("unresolved_invoices_amount")}
+                    </div>
+                );
+            },
         },
     ];
 };

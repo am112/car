@@ -21,7 +21,7 @@ class Address extends Model
         return $this->morphTo();
     }
 
-    public function scopeHome()
+    public function scopeHome(): Address
     {
         return $this->where('type', self::TYPE_HOME);
     }

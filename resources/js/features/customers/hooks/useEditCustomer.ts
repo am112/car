@@ -1,13 +1,13 @@
 import { useToast } from "@/hooks/use-toast";
 import { Customer } from "@/types/customer";
 import { useForm } from "@inertiajs/react";
-import { FormEventHandler, useEffect } from "react";
+import { FormEventHandler } from "react";
 
 type PropsType = {
     customer: Customer;
 };
 
-const useCustomerDetail = ({ customer }: PropsType) => {
+const useEditCustomer = ({ customer }: PropsType) => {
     const { toast } = useToast();
     const { data, setData, patch, processing, errors } = useForm({
         name: customer.name,
@@ -21,12 +21,15 @@ const useCustomerDetail = ({ customer }: PropsType) => {
         patch(route("customers.update", customer.id), {
             preserveState: true,
             preserveScroll: true,
-            onSuccess: () => {
+            onSuccess: ({ props }) => {
                 toast({
-                    title: "Customer Updated",
-                    description: "Customer updated successfully",
+                    variant: props.flash?.error ? "destructive" : "default",
+                    description:
+                        props.flash?.message ||
+                        "Customer updated successfully.",
                 });
             },
+            only: ["customer", "flash"],
         });
     };
 
@@ -39,4 +42,4 @@ const useCustomerDetail = ({ customer }: PropsType) => {
     };
 };
 
-export default useCustomerDetail;
+export default useEditCustomer;

@@ -1,13 +1,4 @@
 import {
-    SidebarContent,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuLink,
@@ -15,7 +6,14 @@ import {
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Link } from "@inertiajs/react";
-import { Calendar, Inbox, Search, Settings, User } from "lucide-react";
+import {
+    ChartBarStacked,
+    CreditCard,
+    File,
+    FileStack,
+    LucideDollarSign,
+    User,
+} from "lucide-react";
 
 type PropsType = {
     title: string;
@@ -37,22 +35,28 @@ export default function CustomerMenu({
         {
             title: "Invoices",
             url: route("customers.invoices", id),
-            icon: Inbox,
+            icon: File,
+            only: ["table"],
         },
         {
             title: "Payments",
             url: "#",
-            icon: Calendar,
+            icon: LucideDollarSign,
+        },
+        {
+            title: "Credit Notes",
+            url: "#",
+            icon: CreditCard,
         },
         {
             title: "Statement Of Account",
             url: "#",
-            icon: Search,
+            icon: ChartBarStacked,
         },
         {
             title: "Aging Report",
             url: "#",
-            icon: Settings,
+            icon: FileStack,
         },
     ];
 

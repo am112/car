@@ -12,11 +12,14 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->string('reference_no')->nullable();
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->string('reference_no')->unique();
             $table->date('issue_at');
             $table->date('due_at');
             $table->integer('subscription_fee');
-            $table->integer('charge_fee')->nullable();
+            $table->integer('charge_fee')->default(0);
+            $table->integer('credit_paid')->default(0);
+            $table->integer('over_paid')->default(0);
             $table->string('status')->default(Invoice::STATUS_PENDING);
             $table->boolean('unresolved')->default(true);
             $table->integer('unresolved_amount')->nullable();
@@ -27,7 +30,8 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->string('reference_no');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->string('reference_no')->unique();
             $table->dateTime('paid_at');
             $table->integer('amount');
             $table->boolean('unresolved')->default(true);

@@ -23,11 +23,15 @@ class InvoiceResource extends JsonResource
             'status' => $this->status,
             'subscription_fee' => Helper::formatMoney($this->subscription_fee),
             'charge_fee' => Helper::formatMoney($this->charge_fee),
+            'credit_paid' => Helper::formatMoney($this->credit_paid),
+            'over_paid' => Helper::formatMoney($this->over_paid),
             'unresolved' => $this->unresolved,
             'unresolved_amount' => Helper::formatMoney($this->unresolved_amount),
             'paid_amount' => Helper::formatMoney($this->payments_sum_invoice_paymentamount ?? 0),
             'created_at' => $this->created_at,
             'customer' => $this->whenLoaded('customer'),
+            'order' => $this->whenLoaded('order'),
+            'charges' => ChargeResource::collection($this->whenLoaded('charges')),
 
         ];
     }

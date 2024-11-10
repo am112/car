@@ -9,10 +9,11 @@ import { Deferred, Head, Link } from "@inertiajs/react";
 import { Datatable } from "@/types/datatable";
 import { DataTable } from "@/components/datatables/data-table";
 import DataTableLoading from "@/components/datatables/datatable-loading";
-import CustomerFilter from "@/features/customers/tables/customer-filter";
 import { customerColumns } from "@/features/customers/tables/customer-columns";
+import { Customer } from "@/types/customer";
+import CustomerFilter from "@/features/customers/tables/customer-filter";
 
-export default function Page({ table }: { table: Datatable }) {
+export default function Page({ table }: { table: Datatable<Customer> }) {
     return (
         <DashboardLayout
             header={
@@ -33,7 +34,10 @@ export default function Page({ table }: { table: Datatable }) {
                 <Deferred data="table" fallback={<DataTableLoading />}>
                     {table && (
                         <DataTable
-                            columns={customerColumns(table.meta.current_page)}
+                            columns={customerColumns(
+                                table.meta.current_page,
+                                table.meta.per_page,
+                            )}
                             data={table.data}
                             paginator={table}
                         />

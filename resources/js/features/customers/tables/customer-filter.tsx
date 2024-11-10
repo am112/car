@@ -6,7 +6,6 @@ import { Loader } from "lucide-react";
 
 export default function CustomerFilter() {
     const { url } = usePage();
-
     const { data, setData, get, processing, transform } = useForm({
         search:
             getParameterByName(encodeURIComponent("filter[search]"), url) ?? "",
@@ -20,6 +19,8 @@ export default function CustomerFilter() {
 
             return {
                 "filter[search]": data.search,
+                limit:
+                    getParameterByName(encodeURIComponent("limit"), url) || 10,
             };
         });
 

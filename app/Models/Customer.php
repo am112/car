@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Customer extends Model
@@ -13,13 +14,19 @@ class Customer extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'contract_at' => 'datetime:d/m/Y h:i A',
-    ];
-
     public function addresses(): MorphMany
     {
         return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function order(): HasOne
+    {
+        return $this->hasOne(Order::class);
     }
 
     public function invoices(): HasMany

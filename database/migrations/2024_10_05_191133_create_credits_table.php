@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('reference_no')->unique();
             $table->integer('amount');
             $table->boolean('unresolved')->default(true);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('credit_invoice', function (Blueprint $table): void {

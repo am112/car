@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('amount');
             $table->boolean('unresolved')->default(true);
             $table->foreignId('invoice_id')->nullable()->constrained('invoices')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

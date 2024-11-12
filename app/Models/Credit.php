@@ -13,6 +13,8 @@ class Credit extends Model
 {
     use HasFactory;
 
+    public const PREFIX = 'CRT';
+
     protected $guarded = [];
 
     public function customer(): BelongsTo

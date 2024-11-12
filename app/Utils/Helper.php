@@ -43,8 +43,8 @@ class Helper
     /**
      * Summary of referenceNoConvention
      */
-    public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $today): string
+    public static function referenceNoConvention(string $prefix, int $runningNo, Carbon $dateAt): string
     {
-        return $prefix . '-' . $today->format('ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
+        return $prefix . '-' . $dateAt->format('ymd') . '-' . str_pad($runningNo, 4, '0', STR_PAD_LEFT);
     }
 }

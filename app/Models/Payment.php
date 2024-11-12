@@ -13,6 +13,8 @@ class Payment extends Model
 {
     use HasFactory;
 
+    public const PREFIX = 'PAY';
+
     protected $guarded = [];
 
     public function customer(): BelongsTo

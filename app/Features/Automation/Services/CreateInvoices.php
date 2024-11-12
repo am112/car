@@ -65,7 +65,7 @@ class CreateInvoices
             ]);
 
             $invoice->update([
-                'reference_no' => Helper::referenceNoConvention('INV', $invoice->id, $runningAt),
+                'reference_no' => Helper::referenceNoConvention(Invoice::PREFIX, $invoice->id, $runningAt),
             ]);
 
             // call event

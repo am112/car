@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('debit')->default(true);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

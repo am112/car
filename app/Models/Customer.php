@@ -26,7 +26,7 @@ class Customer extends Model
 
     public function order(): HasOne
     {
-        return $this->hasOne(Order::class);
+        return $this->hasOne(Order::class)->latestOfMany();
     }
 
     public function invoices(): HasMany

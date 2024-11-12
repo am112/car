@@ -16,6 +16,8 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    public const PREFIX = 'INV';
+
     public const STATUS_PENDING = 'pending';
     public const STATUS_OVERDUE = 'overdue';
     public const STATUS_PAID = 'paid';

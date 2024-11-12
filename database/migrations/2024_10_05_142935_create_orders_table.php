@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('payment_reference')->nullable();
             $table->boolean('active')->default(true);
             $table->dateTime('completed_at')->nullable();
+            $table->boolean('notify')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

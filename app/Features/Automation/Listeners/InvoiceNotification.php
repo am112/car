@@ -18,10 +18,12 @@ class InvoiceNotification implements ShouldQueueAfterCommit
     public function handle(ProcessInvoice $event): void
     {
         $invoice = $event->invoice->fresh();
+        $invoice->load('customer', 'order');
 
-        // send email to customer
-        // Mail::to($invoice->customer->email)
-        //     ->send(new NotifyInvoiceCreated($invoice));
-
+        if ($invoice->order->notify) {
+            // send email to customer
+            Mail::to($invoice->customer->email)
+                ->send(new NotifyInvoiceCreated($invoice));
+        }
     }
 }

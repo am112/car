@@ -18,7 +18,7 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-        $payments = ['stripe', 'paypal'];
+        $payments = ['curlec'];
         $tenure = [12, 24, 36];
         $contractDate = Carbon::parse('2021-01-01')->addDays($this->faker->numberBetween(0, 365));
 

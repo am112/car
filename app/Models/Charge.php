@@ -13,6 +13,8 @@ class Charge extends Model
 {
     use HasFactory;
 
+    public const PREFIX = 'LATE';
+
     public const TYPE_LATE = 'late';
     public const TYPE_PENALTY = 'penalty';
 

@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('status')->default(Invoice::STATUS_PENDING);
             $table->boolean('unresolved')->default(true);
             $table->integer('unresolved_amount')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('payments', function (Blueprint $table): void {
@@ -36,8 +36,8 @@ return new class extends Migration
             $table->integer('amount');
             $table->boolean('unresolved')->default(true);
             $table->integer('unresolved_amount')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('invoice_payment', function (Blueprint $table): void {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Payments\Services;
+namespace App\Features\Payments\Api;
 
 /**
  * all curlec api implementations goes here

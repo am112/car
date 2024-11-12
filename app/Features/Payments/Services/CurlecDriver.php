@@ -2,13 +2,19 @@
 
 namespace App\Features\Payments\Services;
 
+use App\Features\Payments\Api\CurlecAPI;
 use App\Features\Payments\Contracts\PaymentDriver;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class CurlecDriver implements PaymentDriver
 {
-    public function __construct(public CurlecAPI $api) {}
+    private CurlecAPI $api;
+
+    public function __construct()
+    {
+        $this->api = new CurlecAPI;
+    }
 
     /**
      * Summary of create

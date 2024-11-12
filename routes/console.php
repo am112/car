@@ -1,6 +1,8 @@
 <?php
 
+use App\Features\Automation\Services\CreateCharges;
 use App\Features\Automation\Services\CreateInvoices;
+use App\Features\Automation\Services\ProcessPayments;
 use App\Features\Payments\Facades\PaymentGateway;
 use App\Models\Order;
 use App\Utils\Helper;
@@ -8,15 +10,47 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
-Artisan::command('inspire', function () {
+Artisan::command('inspire', function (): void {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Artisan::command('payment:tag', function (App\Features\Automation\Services\ProcessPayments $service) {
-    $service->handle();
+// =========================== simulation testing command ===============================
+
+Artisan::command('simulate:create-invoices', function (CreateInvoices $createInvoices, CreateCharges $createCharges): void {
+
+    Order::factory()->count(1)->create();
+
+    $firstOrder = Order::query()
+        ->orderBy('contract_at', 'ASC')
+        ->first();
+
+    $runningAt = Carbon::parse($firstOrder->contract_at);
+
+    while ($runningAt->lte(today())) {
+
+        $createCharges->handle($runningAt);
+
+        $createInvoices->handle($runningAt);
+
+        $runningAt->addDay();
+
+        usleep(100);
+    }
+
 });
 
-Artisan::command('simulate:process-payment', function () {
+Artisan::command('simulate:create-invoice', function (CreateInvoices $action): void {
+
+    $order = Order::first();
+
+    $runningAt = Carbon::parse('2024-04-03');
+
+    $action->create($order, $runningAt);
+
+});
+
+Artisan::command('simulate:process-payment', function (): void {
+
     $order = Order::first();
 
     $data = [
@@ -27,11 +61,11 @@ Artisan::command('simulate:process-payment', function () {
     ];
 
     PaymentGateway::driver('curlec')->process($data);
+
 });
 
-Artisan::command('simulation:manual-invoice', function (CreateInvoices $action) {
-    $order = Order::first();
-    $runningAt = Carbon::parse('2024-04-03');
+Artisan::command('simulate:payment-tagging', function (ProcessPayments $service): void {
 
-    $action->create($order, $runningAt);
+    $service->handle();
+
 });

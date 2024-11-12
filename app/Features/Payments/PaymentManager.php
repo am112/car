@@ -3,7 +3,6 @@
 namespace App\Features\Payments;
 
 use App\Features\Payments\Contracts\PaymentDriver;
-use App\Features\Payments\Services\CurlecAPI;
 use App\Features\Payments\Services\CurlecDriver;
 use App\Features\Payments\Services\StripeDriver;
 use Illuminate\Support\Manager;
@@ -12,7 +11,7 @@ class PaymentManager extends Manager
 {
     public function createCurlecDriver(): PaymentDriver
     {
-        return new CurlecDriver(new CurlecAPI);
+        return new CurlecDriver;
     }
 
     public function createStripeDriver(): PaymentDriver
@@ -22,6 +21,6 @@ class PaymentManager extends Manager
 
     public function getDefaultDriver()
     {
-        return config('payment.driver', 'curlec');
+        return config('services.payment.default');
     }
 }

@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'payment' => [
+        'default' => env('PAYMENT_PROVIDER', 'curlec'),
+
+        'curlec' => [
+            'id' => '',
+            'key' => '',
+        ],
+    ],
 ];

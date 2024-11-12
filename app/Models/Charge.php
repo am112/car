@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasResolver;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Charge extends Model
 {
-    use HasFactory;
+    use HasFactory, HasResolver;
 
     public const PREFIX = 'LATE';
 
@@ -65,15 +65,5 @@ class Charge extends Model
     public function transactions(): MorphMany
     {
         return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
-    public function scopeUnresolved(Builder $query): void
-    {
-        $query->where('unresolved', true);
-    }
-
-    public function scopeResolved(Builder $query): void
-    {
-        $query->where('unresolved', false);
     }
 }

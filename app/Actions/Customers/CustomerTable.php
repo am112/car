@@ -30,22 +30,23 @@ class CustomerTable implements WithActionTable
                 $builder->where('unresolved', true);
             }], 'unresolved_amount')
             ->allowedSorts($this->allowedSorts)
-            ->allowedFilters($this->allowedFilter())
+            ->allowedFilters([$this->globalFilter()])
             ->paginate($payload['limit'] ?? 10)
             ->withQueryString();
     }
 
     /**
-     * Summary of allowedFilter
+     * Summary of globalFilter
      */
-    private function allowedFilter(): AllowedFilter
+    private function globalFilter(): AllowedFilter
     {
         return AllowedFilter::callback('search', function (Builder $query, $value): void {
             $query
-                ->where('name', 'like', '%' . $value . '%')
-                ->orWhere('tenure', $value)
-                ->orWhere('subscription_fee', str_replace(['.', ',', ' '], '', $value))
-                ->orWhere('contract_at', 'like', '%' . $value . '%');
+                ->where('name', 'like', "%{$value}%")
+                ->orWhere('phone', 'like', "%{$value}%")
+                ->orWhere('email', 'like', "%{$value}%")
+                ->orWhere('status', 'like', "%{$value}%")
+                ->orWhere('created_at', 'like', "%{$value}%");
         });
     }
 }

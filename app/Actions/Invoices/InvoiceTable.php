@@ -28,7 +28,7 @@ class InvoiceTable implements WithActionTable
         return QueryBuilder::for(Invoice::class)
             ->with('order', 'customer', 'charges')
             ->allowedSorts($this->allowedSorts)
-            ->allowedFilters($this->allowedFilter())
+            ->allowedFilters([$this->globalFilter()])
             ->when(isset($payload['customer_id']), function (Builder $query) use ($payload): void {
                 $query->where('customer_id', $payload['customer_id']);
             })
@@ -37,14 +37,14 @@ class InvoiceTable implements WithActionTable
     }
 
     /**
-     * Summary of allowedFilter
+     * Summary of globalFilter
      */
-    private function allowedFilter(): AllowedFilter
+    private function globalFilter(): AllowedFilter
     {
         return AllowedFilter::callback('search', function (Builder $query, $value): void {
             $query
-                ->where('reference_no', 'like', '%' . $value . '%')
-                ->orWhere('issue_at', 'like', '%' . $value . '%')
+                ->where('reference_no', 'like', "%{$value}%")
+                ->orWhere('issue_at', 'like', "%{$value}%")
                 ->orWhere('status', str_replace(['.', ',', ' '], '', $value));
         });
     }

@@ -27,20 +27,20 @@ class UserTable implements WithActionTable
     {
         return QueryBuilder::for(User::class)
             ->allowedSorts($this->allowedSorts)
-            ->allowedFilters($this->allowedFilter())
+            ->allowedFilters([$this->globalFilter()])
             ->paginate($payload['limit'] ?? 10)
             ->withQueryString();
     }
 
     /**
-     * Summary of allowedFilter
+     * Summary of globalFilter
      */
-    private function allowedFilter(): AllowedFilter
+    private function globalFilter(): AllowedFilter
     {
         return AllowedFilter::callback('search', function (Builder $query, $value): void {
             $query
-                ->where('name', 'like', '%' . $value . '%')
-                ->orWhere('email', 'like', '%' . $value . '%');
+                ->where('name', 'like', "%{$value}%")
+                ->orWhere('email', 'like', "%{$value}%");
         });
     }
 }

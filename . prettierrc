@@ -11,9 +11,7 @@
     "overrides": [
         {
             "files": [
-                "*.blade.php",
-                "*.tsx",
-                "*.ts"
+                "*.blade.php"
             ],
             "options": {
                 "parser": "blade"

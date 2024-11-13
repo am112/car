@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Utils\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,7 +19,7 @@ class OrderResource extends JsonResource
             'customer_id' => $this->customer_id,
             'reference_no' => $this->reference_no,
             'tenure' => $this->tenure,
-            'subscription_fee' => Helper::formatMoney($this->subscription_fee),
+            'subscription_fee' => $this->convertToHumanReadable($this->subscription_fee),
             'contract_at' => $this->contract_at->format('Y-m-d'),
             'completed_at' => $this->completed_at,
             'payment_gateway' => $this->payment_gateway,

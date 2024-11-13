@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasCurrency;
 use App\Models\Traits\HasResolver;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Invoice extends Model
 {
-    use HasFactory, HasResolver;
+    use HasCurrency, HasFactory, HasResolver;
 
     public const PREFIX = 'INV';
 

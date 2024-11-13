@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasCurrency;
 use App\Models\Traits\HasResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Payment extends Model
 {
-    use HasFactory, HasResolver;
+    use HasCurrency, HasFactory, HasResolver;
 
     public const PREFIX = 'PAY';
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Utils\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +21,7 @@ class ChargeResource extends JsonResource
             'reference_no' => $this->reference_no,
             'charged_at' => $this->charged_at,
             'type' => $this->type,
-            'amount' => Helper::formatMoney($this->amount),
+            'amount' => $this->convertToHumanReadable($this->amount),
             'unresolved' => $this->unresolved,
             'invoice_id' => $this->invoice_id,
             'created_at' => $this->created_at,

@@ -7,6 +7,7 @@ export type Invoice = {
     due_at: string;
     subscription_fee: number;
     charge_fee: number;
+    total_fee: string;
     credit_paid: number;
     over_paid: number;
     paid_amount: number;

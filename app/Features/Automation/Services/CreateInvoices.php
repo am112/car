@@ -3,6 +3,7 @@
 namespace App\Features\Automation\Services;
 
 use App\Features\Automation\Events\ProcessInvoice;
+use App\Features\Automation\Utils\AutomationUtil;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Utils\Helper;
@@ -18,7 +19,7 @@ class CreateInvoices
     public function handle(Carbon $runningAt): void
     {
 
-        $allowedAt = Helper::monthlyAniversaryDays($runningAt);
+        $allowedAt = AutomationUtil::nextInvoiceCreationDate($runningAt);
 
         Order::query()
             ->runnableOn($allowedAt)

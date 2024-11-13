@@ -112,10 +112,7 @@ export const invoiceColumns = (
             cell: ({ row }) => {
                 return (
                     <div className="flex justify-end">
-                        {(
-                            parseFloat(`${row.original.subscription_fee}`) +
-                            parseFloat(`${row.original.charge_fee}`)
-                        ).toFixed(2)}
+                        {row.original.total_fee}
                     </div>
                 );
             },

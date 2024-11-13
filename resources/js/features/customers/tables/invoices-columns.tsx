@@ -144,14 +144,7 @@ export const customerInvoicesColumns = (
                 );
             },
             cell: ({ row }) => {
-                return (
-                    <div>
-                        {(
-                            parseFloat(`${row.original.subscription_fee}`) +
-                            parseFloat(`${row.original.charge_fee}`)
-                        ).toFixed(2)}
-                    </div>
-                );
+                return <div>{row.original.total_fee}</div>;
             },
         },
         {

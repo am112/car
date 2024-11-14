@@ -21,7 +21,7 @@ export default function CustomerEdit({ customer }: { customer: Customer }) {
             </CardHeader>
             <CardContent>
                 <form onSubmit={onSubmit} className="grid gap-4">
-                    <div className="grid gap-2">
+                    <div className="space-y-2">
                         <Label htmlFor="name">Name as NRIC</Label>
                         <Input
                             id="name"
@@ -29,19 +29,26 @@ export default function CustomerEdit({ customer }: { customer: Customer }) {
                             name="name"
                             disabled={!canEdit}
                             value={data.name}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.name &&
+                                "border-destructive/80 text-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/30"
+                            }
                             autoComplete="name"
                             onChange={(e) => setData("name", e.target.value)}
                         />
 
                         {errors.name && (
-                            <Label className=" text-red-500">
+                            <p
+                                className="mt-2 text-xs text-destructive"
+                                role="alert"
+                                aria-live="polite"
+                            >
                                 {errors.name}
-                            </Label>
+                            </p>
                         )}
                     </div>
                     <div className="grid gap-4 grid-cols-2">
-                        <div className="grid gap-2">
+                        <div className="space-y-2">
                             <Label htmlFor="uuid">NRIC</Label>
                             <Input
                                 id="uuid"
@@ -49,19 +56,26 @@ export default function CustomerEdit({ customer }: { customer: Customer }) {
                                 name="uuid"
                                 disabled={!canEdit}
                                 value={data.uuid}
-                                className="mt-1 block w-full"
+                                className={
+                                    errors.uuid &&
+                                    "border-destructive/80 text-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/30"
+                                }
                                 autoComplete="uuid"
                                 onChange={(e) =>
                                     setData("uuid", e.target.value)
                                 }
                             />
                             {errors.uuid && (
-                                <Label className=" text-red-500">
+                                <p
+                                    className="mt-2 text-xs text-destructive"
+                                    role="alert"
+                                    aria-live="polite"
+                                >
                                     {errors.uuid}
-                                </Label>
+                                </p>
                             )}
                         </div>
-                        <div className="grid gap-2">
+                        <div className="space-y-2">
                             <Label htmlFor="phone">Mobile No</Label>
                             <Input
                                 id="phone"
@@ -69,21 +83,28 @@ export default function CustomerEdit({ customer }: { customer: Customer }) {
                                 name="phone"
                                 disabled={!canEdit}
                                 value={data.phone}
-                                className="mt-1 block w-full"
+                                className={
+                                    errors.phone &&
+                                    "border-destructive/80 text-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/30"
+                                }
                                 autoComplete="Mobile No"
                                 onChange={(e) =>
                                     setData("phone", e.target.value)
                                 }
                             />
                             {errors.phone && (
-                                <Label className=" text-red-500">
+                                <p
+                                    className="mt-2 text-xs text-destructive"
+                                    role="alert"
+                                    aria-live="polite"
+                                >
                                     {errors.phone}
-                                </Label>
+                                </p>
                             )}
                         </div>
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="space-y-2">
                         <Label htmlFor="email">Email</Label>
                         <Input
                             id="email"
@@ -91,14 +112,21 @@ export default function CustomerEdit({ customer }: { customer: Customer }) {
                             name="email"
                             disabled={!canEdit}
                             value={data.email}
-                            className="mt-1 block w-full"
+                            className={
+                                errors.email &&
+                                "border-destructive/80 text-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/30"
+                            }
                             autoComplete="email"
                             onChange={(e) => setData("email", e.target.value)}
                         />
                         {errors.email && (
-                            <Label className=" text-red-500">
+                            <p
+                                className="mt-2 text-xs text-destructive"
+                                role="alert"
+                                aria-live="polite"
+                            >
                                 {errors.email}
-                            </Label>
+                            </p>
                         )}
                     </div>
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Features\Payments\Facades\PaymentGateway;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('', '/login');
@@ -42,3 +44,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('curlec-instant-pay', function () {
+    return PaymentGateway::driver('curlec')->create([]);
+});
+
+Route::get('curlec-instant-pay-response', function (Request $request) {
+
+    PaymentGateway::driver('curlec')->process($request->all());
+
+    return 'OK';
+});

@@ -39,8 +39,10 @@ return [
         'default' => env('PAYMENT_PROVIDER', 'curlec'),
 
         'curlec' => [
-            'id' => '',
-            'key' => '',
+            'merchantId' => '7218372',
+            'merchantKey' => 'vNsoWBXyBkESQwhSbUC/E24LfvPrchUCX36+C3rwbc8=',
+            'employeeId' => '722028',
+            'domain' => 'https://demo.curlec.com',
         ],
     ],
 ];

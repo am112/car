@@ -7,10 +7,10 @@ interface PaymentDriver
     /**
      * Summary of create
      */
-    public function create(array $payload): void;
+    public function create(array $payload): mixed;
 
     /**
      * Summary of processPayment
      */
-    public function process(array $payload): void;
+    public function process(array $payload);
 }

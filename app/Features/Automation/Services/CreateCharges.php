@@ -76,8 +76,6 @@ class CreateCharges
             $charge->update([
                 'reference_no' => Helper::referenceNoConvention(Charge::PREFIX, $charge->id, $runningAt),
             ]);
-
-            info('charge created:', $charge->toArray());
         }
     }
 }

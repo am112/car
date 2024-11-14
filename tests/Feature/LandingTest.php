@@ -1,6 +1,6 @@
 <?php
 
-it('it should redirect to login', function () {
+it('should redirect to login', function () {
     $response = $this->get('/');
 
     $response->assertRedirect('/login');

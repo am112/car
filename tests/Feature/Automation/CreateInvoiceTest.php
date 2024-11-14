@@ -4,7 +4,6 @@ use App\Features\Automation\Events\ProcessInvoice;
 use App\Features\Automation\Services\CreateCharges;
 use App\Features\Automation\Services\CreateInvoices;
 use App\Features\Automation\Services\ProcessPayments;
-use App\Features\Payments\Facades\PaymentGateway;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Utils\Helper;
@@ -122,13 +121,15 @@ it('automation: invoice should not be charge (late)', function (): void {
 
     // simulate payment
     $data = [
+        'customer_id' => $order->customer_id,
         'reference_no' => Helper::referenceNoConvention('PAY', mt_rand(1, 9999), today()),
         'amount' => $order->subscription_fee,
-        'payment_reference' => $order->payment_reference,
         'paid_at' => $order->contract_at,
+        'unresolved' => true,
+        'unresolved_amount' => $order->subscription_fee,
     ];
 
-    PaymentGateway::driver($order->payment_gateway)->process($data);
+    $order->payments()->create($data);
 
     $runningAt = Carbon::parse($order->contract_at);
 
@@ -159,10 +160,12 @@ it('automation: invoice should be charge (late: 1000)', function (): void {
 
     // simulate payment
     $data = [
+        'customer_id' => $order->customer_id,
         'reference_no' => Helper::referenceNoConvention('PAY', mt_rand(1, 9999), today()),
         'amount' => $order->subscription_fee,
-        'payment_reference' => $order->payment_reference,
         'paid_at' => $order->contract_at,
+        'unresolved' => true,
+        'unresolved_amount' => $order->subscription_fee,
     ];
 
     $runningAt = Carbon::parse($order->contract_at);
@@ -172,7 +175,7 @@ it('automation: invoice should be charge (late: 1000)', function (): void {
 
     while ($runningAt->lte($invoiceDate)) {
         if (Carbon::parse($order->contract_at)->diffInDays($runningAt) == 14) {
-            PaymentGateway::driver($order->payment_gateway)->process($data);
+            $order->payments()->create($data);
         }
         (new CreateCharges)->handle($runningAt);
 

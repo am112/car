@@ -4,6 +4,7 @@ use App\Features\Automation\Services\CreateCharges;
 use App\Features\Automation\Services\CreateInvoices;
 use App\Features\Automation\Services\ProcessPayments;
 use App\Features\Payments\Facades\PaymentGateway;
+use App\Features\Payments\Services\CurlecDriver;
 use App\Models\Order;
 use App\Utils\Helper;
 use Carbon\Carbon;
@@ -68,4 +69,8 @@ Artisan::command('simulate:payment-tagging', function (ProcessPayments $service)
 
     $service->handle();
 
+});
+
+Artisan::command('simulate:curlec-collection', function (CurlecDriver $driver) {
+    $driver->generateCollection();
 });

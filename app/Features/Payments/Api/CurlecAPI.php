@@ -72,24 +72,20 @@ class CurlecAPI
     {
         $url = '/curlec-services';
 
-        /**
-         * https://demo.curlec.com/curlec-services?method=04&merchantId=1&data={"date":"12/11/2020 12:26:30","reminder":"false","upload":"true","list":[{"refNum":"12341","amount":"160.00","items":[{"item":"TTDI-SB-1235","amount":"30.00","description":"Monthly Rental","customerUID":"INV-001"},{"item":"TTDI-SB-1236","amount":"50.00","description":"Monthly Rental","customerUID":"INV-002"},{"item":"TTDI-SB-1237","amount":"80.00","description":"Monthly Rental","customerUID":"INV-003"}]},{"refNum":"0984","amount":"40.00","items":[{"item":"TTDI-SB-1240","amount":"10.00","description":"Monthly Rental","customerUID":"INV-004"},{"item":"TTDI-SB-1241","amount":"30.00","description":"Monthly Rental","customerUID":"INV-005"}]}]}
-         */
         $payload = [
             'method' => '04',
             'merchantId' => $this->merchantId,
-            'data' => '{"date":"15/11/2024 00:16:30","reminder":"false","upload":"true","list":[{"refNum":"Zhq-ccY-gDi","amount":"100.00","items":[{"item":"TTDI-SB-1235","amount":"100.00","description":"Monthly Rental","customerUID":"INV-001"}]}]}',
+            'data' => '{"date":"15/11/2024 00:16:30","reminder":"false","upload":"true","list":[{"refNum":"Zhq-ccY-gDi","amount":"100.00"}]}',
         ];
 
-        $checksum = hash('sha256', $this->merchantKey . '|' . 'method=04&merchantId=' . $this->merchantId . '&data=' . $payload['data']);
-        info($this->generateChecksum('', $payload));
-        info($checksum);
+        $checksum = $this->generateChecksum('', $payload);
 
         $payload['checksum'] = $checksum;
 
-        $response = Http::post($this->domain . $url . '?method=04&merchantId=' . $this->merchantId . '&data=' . $payload['data'] . '&checksum=' . $checksum);
+        $response = Http::timeout(60)
+            ->withQueryParameters($payload)
+            ->post('https://demo.curlec.com/curlec-services');
 
-        info('request', $payload);
         info('response', ['result' => $response]);
 
     }
